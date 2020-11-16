@@ -1,62 +1,74 @@
+import math
 import random
 import typing as tp
- 
- 
-def is_prime(n: int) -> bool:
-    counter = 2
-    if n < 2:
-        return False
-    else:
-        while n % counter != 0:
-            counter += 1
-        return counter == n
+
+
+def is_prime(n: int) -> bool:  
+ if(n == 1):
+  return False
+ counter = 2
+ while(n % counter != 0):
+  counter += 1
+ if(counter == n):
+  return True
+ else:
+  return False
  
  
 def gcd(a: int, b: int) -> int:
-    if b == 0:
-        return a
-    else:
-        return gcd(b, a % b)
+ if (b == 0):
+  return a
+ else:
+  return gcd(b, a % b)
  
  
 def multiplicative_inverse(e: int, phi: int) -> int:
-    var1 = e
-    var2 = phi
-    if var1 < var2:
-        var1, var2 = var2, var1
-    list1 = [var1]
-    list2 = [var2]
-    n = 0
-    while var1 % var2:
-        var1, var2 = var2, var1 % var2
-        list1.append(var1)
-        list2.append(var2)
-        n += 1
-    x, y = 0, 1
-    while n:
-        n -= 1
-        x, y = y, x - y * (list1[n] // list2[n])
+ var1 = e
+ var2 = phi
+ if var1 < var2:
+  var1, var2 = var2, var1
+ list1 = [var1]
+ list2 = [var2]
+ n = 0
+ while var1 % var2:
+  var1, var2 = var2, var1 % var2
+  list1.append(var1)
+  list2.append(var2)
+  n += 1
+ x, y = 0, 1
+ while n:
+  n -= 1
+  x, y = y, x - y * (list1[n] // list2[n])
  
-    return y % phi
+ return y % phi
  
  
-def generate_keypair(p, q):
+def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
         raise ValueError("Both numbers must be prime.")
     elif p == q:
         raise ValueError("p and q cannot be equal")
  
-    n = p * q
-    phi = (p - 1) * (q - 1)
+    n = p*q
+    # PUT YOUR CODE HERE
+ 
+    phi = (p-1)*(q-1)
+    # PUT YOUR CODE HERE
+ 
+    # Choose an integer e such that e and phi(n) are coprime
     e = random.randrange(1, phi)
  
+    # Use Euclid's Algorithm to verify that e and phi(n) are coprime
     g = gcd(e, phi)
     while g != 1:
         e = random.randrange(1, phi)
         g = gcd(e, phi)
  
+    # Use Extended Euclid's Algorithm to generate the private key
     d = multiplicative_inverse(e, phi)
  
+    # Return public and private keypair
+    # Public key is (e, n) and private key is (d, n)
     return ((e, n), (d, n))
  
  
@@ -93,4 +105,3 @@ if __name__ == "__main__":
     print("Decrypting message with public key ", public, " . . .")
     print("Your message is:")
     print(decrypt(public, encrypted_msg))
- 
