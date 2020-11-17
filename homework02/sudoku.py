@@ -26,7 +26,8 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     for row in range(9):
         print(
             "".join(
-               grid[row][col].center(width) + ("|" if str(col) in "25" else "")for col in range(9)
+                grid[row][col].center(width) + ("|" if str(col) in "25" else "")
+                for col in range(9)
             )
         )
         if str(row) in "25":
@@ -66,7 +67,9 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     """
     Xblock = 3 * (pos[0] // 3)
     Yblock = 3 * (pos[1] // 3)
-    return [grid[x][y] for x in range(Xblock, Xblock + 3) for y in range(Yblock, Yblock + 3)]
+    return [
+        grid[x][y] for x in range(Xblock, Xblock + 3) for y in range(Yblock, Yblock + 3)
+    ]
 
 
 def find_empty_positions(
@@ -80,10 +83,14 @@ def find_empty_positions(
     return None
 
 
-def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
+def find_possible_values(
+    grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]
+) -> tp.Set[str]:
 
     values = set("123456789")
-    return values.difference(set(get_row(grid, pos)), set(get_col(grid, pos)), set(get_block(grid, pos)))
+    return values.difference(
+        set(get_row(grid, pos)), set(get_col(grid, pos)), set(get_block(grid, pos))
+    )
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
@@ -110,18 +117,18 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
         result = set(get_row(solution, (row, 0)))
         if result != set("123456789"):
             return False
- 
+
     for col in range(len(solution)):
         result = set(get_col(solution, (0, col)))
         if result != set("123456789"):
             return False
- 
+
     for row in range(0, (len(solution) - 1), 3):
         for col in range(0, (len(solution) - 1), 3):
             result = set(get_block(solution, (row, col)))
             if result != set("123456789"):
                 return False
- 
+
     return True
 
 
