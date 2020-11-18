@@ -87,10 +87,12 @@ def find_possible_values(
     grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]
 ) -> tp.Set[str]:
 
-    values = set("123456789")
-    return values.difference(
-        set(get_row(grid, pos)), set(get_col(grid, pos)), set(get_block(grid, pos))
-    )
+    possible_numbers = set("123456789")
+    row_numbers = set(get_row(grid, pos))
+    col_numbers = set(get_col(grid, pos))
+    block_numbers = set(get_block(grid, pos))
+    result = possible_numbers - row_numbers - col_numbers - block_numbers
+    return result
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
