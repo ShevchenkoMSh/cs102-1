@@ -2,6 +2,7 @@ import pathlib
 import typing as tp
 import random
 
+
 T = tp.TypeVar("T")
 
 
@@ -47,10 +48,10 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
 
 def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
 
-    x = []
+    last = []
     for i in range(len(grid)):
-        x += grid[i][pos[1]]
-    return x
+        last.append(grid[i][pos[1]])
+    return last
 
 
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -96,15 +97,16 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 
     if not pos:
         return grid
-    values = find_possible_values(grid, pos)
-    for value in values:
-        grid[pos[0]][pos[1]] = value
-        solution = []
-        solution = solve(grid)
-        if solution:
-            return solution
 
-    grid[pos[0]][pos[1]] = "."
+    row, col = pos
+
+    for i in find_possible_values(grid, pos):
+        grid[row][col] = i
+        mean = solve(grid)
+        if mean:
+            return mean
+
+    grid[row][col] = "."
     return None
 
 
@@ -131,17 +133,18 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
 
-    grid = [["." for _ in range(9)] for _ in range(9)]
-    grid = solve(grid)
+    grid = solve([["."] * 9 for _ in range(9)])
 
-    cells_hidden = 0
-    while N + cells_hidden < 81:
-        rnd_row = random.randint(0, 8)
-        rnd_col = random.randint(0, 8)
-        if grid[rnd_row][rnd_col] != ".":
-            grid[rnd_row][rnd_col] = "."
-            cells_hidden += 1
-    return grid
+    N = 81 - min(81, N)
+    
+    while N:
+        row = random.randint(0, 8)
+        col = random.randint(0, 8)
+        if grid is not None:
+            if grid[row][col] != ".":
+                grid[row][col] = "."
+                N -= 1
+    return grid  # type: ignore
 
 
 if __name__ == "__main__":
