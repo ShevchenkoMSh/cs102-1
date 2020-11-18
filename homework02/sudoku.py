@@ -24,7 +24,9 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     width = 2
     line = "+".join(["-" * (width * 3)] * 3)
     for row in range(9):
-        print("".join(grid[row][col].center(width) + ("|" if str(col) in "25" else "")
+        print(
+            "".join(
+                grid[row][col].center(width) + ("|" if str(col) in "25" else "")
                 for col in range(9)
             )
         )
