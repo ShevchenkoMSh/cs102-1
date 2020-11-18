@@ -134,9 +134,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
 
     grid = solve([["."] * 9 for _ in range(9)])
-
     N = 81 - min(81, N)
-    
     while N:
         row = random.randint(0, 8)
         col = random.randint(0, 8)
