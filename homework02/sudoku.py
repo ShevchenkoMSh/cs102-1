@@ -24,9 +24,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     width = 2
     line = "+".join(["-" * (width * 3)] * 3)
     for row in range(9):
-        print(
-            "".join(
-                grid[row][col].center(width) + ("|" if str(col) in "25" else "")
+        print("".join(grid[row][col].center(width) + ("|" if str(col) in "25" else "")
                 for col in range(9)
             )
         )
@@ -67,9 +65,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     """
     Xblock = 3 * (pos[0] // 3)
     Yblock = 3 * (pos[1] // 3)
-    return [
-        grid[x][y] for x in range(Xblock, Xblock + 3) for y in range(Yblock, Yblock + 3)
-    ]
+    return [grid[x][y] for x in range(Xblock, Xblock + 3) for y in range(Yblock, Yblock + 3)]
 
 
 def find_empty_positions(
@@ -83,9 +79,7 @@ def find_empty_positions(
     return None
 
 
-def find_possible_values(
-    grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]
-) -> tp.Set[str]:
+def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
 
     possible_numbers = set("123456789")
     row_numbers = set(get_row(grid, pos))
