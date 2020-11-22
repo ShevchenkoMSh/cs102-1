@@ -1,12 +1,16 @@
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     k = 0
+    firstBigSymbol = 65
+    firstSmallSymbol = 97
+    lastSmallSymbol = 122 
+    lastBigSymbol = 90
     ciphertext = ""
     for i in range(len(plaintext)):
-        if ord(plaintext[i]) >= 65 and ord(plaintext[i]) <= 90:
-            ciphertext += chr((ord(plaintext[i]) + (ord(keyword[k]) % 65) - 65) % 26 + 65)
+        if ord(plaintext[i]) >= firstBigSymbol and ord(plaintext[i]) <= lastBigSymbol:
+            ciphertext += chr((ord(plaintext[i]) + (ord(keyword[k]) % firstBigSymbol) - firstBigSymbol) % 26 + firstBigSymbol)
             k = (k + 1) % len(keyword)
-        elif ord(plaintext[i]) >= 97 and ord(plaintext[i]) <= 122:
-            ciphertext += chr((ord(plaintext[i]) + (ord(keyword[k]) % 97) - 97) % 26 + 97)
+        elif ord(plaintext[i]) >= firstSmallSymbol and ord(plaintext[i]) <= lastSmallSymbol:
+            ciphertext += chr((ord(plaintext[i]) + (ord(keyword[k]) % firstSmallSymbol) - firstSmallSymbol) % 26 + firstSmallSymbol)
             k = (k + 1) % len(keyword)
         else:
             ciphertext += plaintext[i]
@@ -19,11 +23,11 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     k = 0
     plaintext = ""
     for i in range(len(ciphertext)):
-        if ord(ciphertext[i]) >= 65 and ord(ciphertext[i]) <= 90:
-            plaintext += chr((ord(ciphertext[i]) - ((ord(keyword[k]) % 65) % 65) - 65) % 26 + 65)
+        if ord(ciphertext[i]) >= firstBigSymbol and ord(ciphertext[i]) <= lastBigSymbol:
+            plaintext += chr((ord(ciphertext[i]) - ((ord(keyword[k]) % firstBigSymbol) % firstBigSymbol) - firstBigSymbol) % 26 + firstBigSymbol)
             k = (k + 1) % len(keyword)
-        elif ord(ciphertext[i]) >= 97 and ord(ciphertext[i]) <= 122:
-            plaintext += chr((ord(ciphertext[i]) - (ord(keyword[k]) % 97) - 97) % 26 + 97)
+        elif ord(ciphertext[i]) >= firstSmallSymbol and ord(ciphertext[i]) <= lastSmallSymbol:
+            plaintext += chr((ord(ciphertext[i]) - (ord(keyword[k]) % firstSmallSymbol) - firstSmallSymbol) % 26 + firstSmallSymbol)
             k = (k + 1) % len(keyword)
         else:
             plaintext += ciphertext[i]
