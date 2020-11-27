@@ -4,6 +4,8 @@ firstBigSymbol = 65
 firstSmallSymbol = 97
 lastSmallSymbol = 122
 lastBigSymbol = 90
+
+
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ciphertext = ""
     for i in range(len(plaintext)):

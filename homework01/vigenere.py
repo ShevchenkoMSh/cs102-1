@@ -2,6 +2,8 @@ firstBigSymbol = 65
 firstSmallSymbol = 97
 lastSmallSymbol = 122
 lastBigSymbol = 90
+
+
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     k = 0
     ciphertext = ""
